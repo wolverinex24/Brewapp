@@ -1,4 +1,4 @@
-package com.new.brewapp.uni
+package com.brew.name
 
 import io.flutter.embedding.android.FlutterActivity
 
