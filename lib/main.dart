@@ -1,12 +1,14 @@
 import 'package:brewapp/home/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:brewapp/otp/otp.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    initialRoute: '/',
+    initialRoute: 'phone',
     routes: {
-      '/': (context) => Home_page(),
+      'phone': (context) => Home_page(),
+      'otp': (context) => otp(),
     },
   ));
 }
