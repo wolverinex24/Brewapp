@@ -101,7 +101,10 @@ class _otpState extends State<otp> {
               height: 45,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, 'createuser', (route) => false);
+                },
                 child: Text("Verify Phone"),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.yellow[900],
