@@ -1,14 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home_page extends StatefulWidget {
   const Home_page({super.key});
-
+  static String verify = "";
   @override
   State<Home_page> createState() => _Home_pageState();
 }
 
 class _Home_pageState extends State<Home_page> {
   TextEditingController countrycode = TextEditingController();
+  var phone = "";
 
   @override
   void initState() {
@@ -99,6 +101,9 @@ class _Home_pageState extends State<Home_page> {
                   Expanded(
                     child: TextField(
                       keyboardType: TextInputType.phone,
+                      onChanged: (value) {
+                        phone = value;
+                      },
                       decoration: InputDecoration(
                           border: InputBorder.none, hintText: "Phone"),
                     ),
@@ -113,8 +118,17 @@ class _Home_pageState extends State<Home_page> {
               height: 45,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "otp");
+                onPressed: () async {
+                  await FirebaseAuth.instance.verifyPhoneNumber(
+                    phoneNumber: '${countrycode.text + phone}',
+                    verificationCompleted: (PhoneAuthCredential credential) {},
+                    verificationFailed: (FirebaseAuthException e) {},
+                    codeSent: (String verificationId, int? resendToken) {
+                      Home_page.verify = verificationId;
+                      Navigator.pushNamed(context, "otp");
+                    },
+                    codeAutoRetrievalTimeout: (String verificationId) {},
+                  );
                 },
                 child: Text("Send code"),
                 style: ElevatedButton.styleFrom(

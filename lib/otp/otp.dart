@@ -1,5 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:brewapp/home/Home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_login/flutter_login.dart';
 import 'package:pinput/pinput.dart';
 
 class otp extends StatefulWidget {
@@ -10,6 +13,7 @@ class otp extends StatefulWidget {
 }
 
 class _otpState extends State<otp> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
@@ -35,6 +39,7 @@ class _otpState extends State<otp> {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
+    var code;
     return Scaffold(
       backgroundColor: Colors.amber,
       appBar: AppBar(
@@ -90,6 +95,9 @@ class _otpState extends State<otp> {
               length: 6,
               pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
               showCursor: true,
+              onChanged: (value) {
+                code = value;
+              },
             ),
             SizedBox(
               height: 10,
@@ -101,9 +109,27 @@ class _otpState extends State<otp> {
               height: 45,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, 'createuser', (route) => false);
+                onPressed: () async {
+                  try {
+                    PhoneAuthCredential credential =
+                        PhoneAuthProvider.credential(
+                            verificationId: Home_page.verify, smsCode: code);
+
+                    // Sign the user in (or link) with the credential
+                    await auth.signInWithCredential(credential);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, 'createuser', (route) => false);
+                  } catch (e) {
+                    AwesomeDialog(
+                      context: context,
+                      dialogType: DialogType.error,
+                      animType: AnimType.rightSlide,
+                      title: 'Wrong OTP',
+                      desc: 'Enter correct OTP',
+                      btnCancelOnPress: () {},
+                      btnOkOnPress: () {},
+                    )..show();
+                  }
                 },
                 child: Text("Verify Phone"),
                 style: ElevatedButton.styleFrom(
