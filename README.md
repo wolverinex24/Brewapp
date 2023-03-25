@@ -4,18 +4,12 @@ app made using flutter and firebase
 =======
 # brewapp
 
-A new Flutter project.
+A new Flutter project to study firebase implimentation.
+## UI And Working
+
+
+https://user-images.githubusercontent.com/72180769/227714312-2c7f4425-de7a-48c3-ae9e-7c77dc18b225.mov
+
+
 
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
->>>>>>> d7d10fd (creating github for brewapp)
